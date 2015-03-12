@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
   sass = require('gulp-sass'),
   cssmin = require('gulp-cssmin'),
+  minifyCSS = require('gulp-minify-css'),
   autoprefixer = require('gulp-autoprefixer'),
   rename = require("gulp-rename"),
   jshint = require('gulp-jshint'),
@@ -15,7 +16,7 @@ gulp.task('default', ['clean', 'build', 'watch']);
 gulp.task('build', ['css', 'lint', 'js']);
 
 gulp.task('clean', function(){
-  gulp.src(['css', 'js/*.min.js'], {read: false})
+  gulp.src(['dist'], {read: false})
     .pipe(clean());
 })
 
@@ -28,9 +29,12 @@ gulp.task('css', function () {
     browsers: ['last 2 versions'],
     cascade: false
   }))
-  .pipe(cssmin())
-  .pipe(rename({suffix: '.min'}))
-  .pipe(gulp.dest('./dist/css'))
+  .pipe(minifyCSS({
+    keepSpecialComments: '*'
+  }))
+  .pipe(rename('style.css'))
+  //.pipe(gulp.dest('./dist/css'))
+  .pipe(gulp.dest('./'))
   .pipe(notify({ message: 'css task complete' }));
 });
 

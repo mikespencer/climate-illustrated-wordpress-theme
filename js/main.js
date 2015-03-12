@@ -1,4 +1,3 @@
 (function(){
-    "use strict";
-    //code here
+  "use strict";
 })();

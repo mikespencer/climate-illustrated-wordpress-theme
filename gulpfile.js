@@ -9,6 +9,7 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   stripDebug = require('gulp-strip-debug'),
   notify = require('gulp-notify'),
+  concat = require('gulp-concat'),
   clean = require('gulp-clean');
 
 gulp.task('default', ['clean', 'build', 'watch']);
@@ -39,9 +40,10 @@ gulp.task('css', function () {
 });
 
 gulp.task('js', function() {
-  gulp.src(['js/*.js'])
+  gulp.src(['js/lib/*.js', 'js/*.js'])
+    .pipe(concat("main.js"))
     .pipe(uglify())
-    .pipe(stripDebug())
+    //.pipe(stripDebug())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('./dist/js'))
     .pipe(notify({ message: 'js task complete' }));

@@ -30,21 +30,21 @@ gulp.task('css', function () {
   }))
   .pipe(cssmin())
   .pipe(rename({suffix: '.min'}))
-  .pipe(gulp.dest('./css'))
+  .pipe(gulp.dest('./dist/css'))
   .pipe(notify({ message: 'css task complete' }));
 });
 
 gulp.task('js', function() {
-  gulp.src(['js/*.js', '!js/*.min.js'])
+  gulp.src(['js/*.js'])
     .pipe(uglify())
     .pipe(stripDebug())
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('js'))
+    .pipe(gulp.dest('./dist/js'))
     .pipe(notify({ message: 'js task complete' }));
 });
 
 gulp.task('lint', function() {
-  gulp.src(['./js/*.js', '!js/*.min.js'])
+  gulp.src(['./js/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(notify({ message: 'lint task complete' }));

@@ -1,0 +1,5 @@
+.hide-for-small {
+  @media (max-width: $screen-small){
+    display: none;
+  }
+}

@@ -1,4 +1,4 @@
-$navHeight: 75px;
+$navHeight: 50px;
 $logoWidth: 300px;
 
 .globalNav {
@@ -24,7 +24,7 @@ $logoWidth: 300px;
   position: absolute;
   width: $logoWidth;
   margin: 0 auto;
-  top: $navHeight / 2;
+  top: $navHeight / 2.5;
 }
 
 .globalNavSpacer {

@@ -1,0 +1,32 @@
+$navHeight: 75px;
+$logoWidth: 300px;
+
+.globalNav {
+  background-color: $brandPrimary;
+  height: $navHeight;
+  position: fixed;
+  z-index: 99999;
+  width: 100%;
+  top: 0;
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: $navHeight;
+    margin: 0;
+  }
+}
+
+.globalNav-logoWrap {
+  width: $logoWidth;
+  margin:0 auto;
+}
+
+.globalNav-logo {
+  position: absolute;
+  width: $logoWidth;
+  margin: 0 auto;
+  top: $navHeight / 2;
+}
+
+.globalNavSpacer {
+  height: $navHeight;
+}

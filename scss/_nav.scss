@@ -1,13 +1,22 @@
 $navHeight: 50px;
 $logoWidth: 300px;
+$mobileNavWidth: 300px;
+
+.mobile-menu-active {
+  .globalNav {
+    left: $mobileNavWidth;
+  }
+}
 
 .globalNav {
+  transition: left 500ms ease;
   background-color: $brandPrimary;
   height: $navHeight;
   position: fixed;
   z-index: 99999;
   width: 100%;
   top: 0;
+  left: 0;
 
   h1, h2, h3, h4, h5, h6 {
     line-height: $navHeight;

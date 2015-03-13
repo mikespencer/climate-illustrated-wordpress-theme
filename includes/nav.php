@@ -13,7 +13,7 @@ foreach ( $categories as $category ) {
 ?>
 
 <div class="globalNavSpacer"></div>
-<nav class="globalNav clearfix mobile-menu-wrapper" role="navigation">
+<nav class="globalNav clearfix mobile-menu-wrapper toggle-mobile-menu" role="navigation">
   <div class="globalNav-logoWrap">
     <img class="globalNav-logo" src="http://placehold.it/300x50&text=Climate+Illustrated" alt="Climate Illustrated" />
   </div>

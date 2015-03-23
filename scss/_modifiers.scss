@@ -1,5 +1,21 @@
+.display-none {
+  display: none;
+}
+
 .hide-for-small {
   @media (max-width: $screen-small){
     display: none;
   }
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.align-center {
+  text-align: center;
 }

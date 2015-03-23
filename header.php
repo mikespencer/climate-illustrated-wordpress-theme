@@ -19,7 +19,7 @@
   <?php include('includes/nav.php'); ?>
 
   <div class="main-container">
-    <header class="main-header" role="banner" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="main-header display-none" role="banner" itemscope itemtype="http://schema.org/WPHeader">
       <div class="container">
         <div id="header">
           <?php if ( !empty($mts_options['mts_header_social']) && is_array($mts_options['mts_header_social'])) { ?>
@@ -67,6 +67,7 @@
 
         </div><!--#header-->
       </div><!--.container-->
+
       <?php if ( $mts_options['mts_show_primary_nav'] == '1' ) { ?>
         <div id="sticky" class="primary-navigation" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
           <div class="container">

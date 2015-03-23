@@ -1,3 +1,7 @@
+#wpadminbar {
+  @extend .display-none;
+}
+
 .sidebar {
   //need to keep sidebar to min 300px for ad
   width: 300px;

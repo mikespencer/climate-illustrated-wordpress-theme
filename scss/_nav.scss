@@ -1,5 +1,5 @@
 $navHeight: 50px;
-$logoWidth: 300px;
+$logoWidth: 350px;
 $mobileNavWidth: 300px;
 
 .mobile-menu-active {
@@ -17,6 +17,7 @@ $mobileNavWidth: 300px;
   width: 100%;
   top: 0;
   left: 0;
+  overflow: visible;
 
   h1, h2, h3, h4, h5, h6 {
     line-height: $navHeight;
@@ -25,15 +26,42 @@ $mobileNavWidth: 300px;
 }
 
 .globalNav-logoWrap {
-  width: $logoWidth;
-  margin:0 auto;
+  display: inline;
+  text-align: center;
+  top: $navHeight / 2.5;
+  white-space: nowrap;
+  overflow: visible;
 }
 
-.globalNav-logo {
+.hamburger {
   position: absolute;
-  width: $logoWidth;
-  margin: 0 auto;
-  top: $navHeight / 2.5;
+  left: 15px;
+  top: 13px;
+  width: 17px;
+  height: 19px;
+  &:before {
+    content: "\f0c9";
+    color: #fff;
+    font-family: FontAwesome;
+  }
+}
+
+.styledFontLogo {
+  font-family: 'Bangers';
+  font-weight: normal;
+  font-size: 24px;
+  color: #ffffff;
+  text-shadow: -1px 1px 1px white, -2px 2px 0px rgba(0,0,0,.15);
+  letter-spacing: .015em;
+
+  &:hover {
+    color: #ffffff;
+  }
+
+  @media (min-width: $screen-extra-small){
+    font-size: inherit;
+  }
+
 }
 
 .globalNavSpacer {

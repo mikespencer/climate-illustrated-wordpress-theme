@@ -6,8 +6,8 @@
     <div id="sidebars" class="g">
         <div class="sidebar">
 
-            <div class="widget hide-for-small ad">
-                <?php include('includes/ads/300x250.php'); ?>
+            <div class="widget">
+                <?php include('includes/ads/rr-top.php'); ?>
             </div>
 
             <?php if (!dynamic_sidebar($sidebar)) : ?>

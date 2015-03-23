@@ -1,0 +1,391 @@
+diff --git a/.gitignore b/.gitignore
+index 5455e0c..c353790 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,2 +1,3 @@
+ node_modules
+ .sass-cache
++bower_components
+diff --git a/dist/js/main.min.js b/dist/js/main.min.js
+index fbc9e29..2f51975 100644
+--- a/dist/js/main.min.js
++++ b/dist/js/main.min.js
+@@ -1 +1 @@
+-!function(t){"use strict";t&&(t.fn.viewable=function(n){function e(){setTimeout(c,500),i()}function o(){l||(l=!0,setTimeout(function(){l=!1,c()},n.interval))}function i(){h.on("scroll"+a+" resize"+a,o)}function f(){h.off("scroll"+a+" resize"+a)}function c(){var e=h.scrollTop(),o=e+h.height(),i=!1;t.each(r,function(f,c){if(c){var u=t(c),l=u.height()||0,s=u.offset().top,a=s+l;a+n.offset>=e&&s-n.offset<=o&&(n.callback.call(this,n),r[f]=!1,i=!0)}}),i&&(r=u())}function u(){for(var t=r,n=t.length,e=[];n--;)t[n]&&e.push(t[n]);return e.length||f(),e}var r=[],l=!1,s=Math.floor(1e9*Math.random()),a=".viewable_"+s,h=t(window);return n=t.extend({interval:100,offset:0,callback:function(){}},n),e(),this.each(function(t,n){r.push(n)})})}(window.jQuery),function(){"use strict"}(jQuery);
+\ No newline at end of file
++!function(t){"use strict";t&&(t.fn.viewable=function(n){function i(){setTimeout(f,500),e()}function o(){r||(r=!0,setTimeout(function(){r=!1,f()},n.interval))}function e(){h.on("scroll"+u+" resize"+u,o)}function c(){h.off("scroll"+u+" resize"+u)}function f(){var i=h.scrollTop(),o=i+h.height(),e=!1;t.each(l,function(c,f){if(f){var a=t(f),r=a.height()||0,s=a.offset().top,u=s+r;u+n.offset>=i&&s-n.offset<=o&&(n.callback.call(this,n),l[c]=!1,e=!0)}}),e&&(l=a())}function a(){for(var t=l,n=t.length,i=[];n--;)t[n]&&i.push(t[n]);return i.length||c(),i}var l=[],r=!1,s=Math.floor(1e9*Math.random()),u=".viewable_"+s,h=t(window);return n=t.extend({interval:100,offset:0,callback:function(){}},n),i(),this.each(function(t,n){l.push(n)})})}(window.jQuery),function(t){"use strict";var n={config:{"300x250":"http://placehold.it/300x250&text=300x250+ad"},init:function(){t(".ad").viewable({offset:-50,callback:function(i){var o=t(this),e=o.data("ad");window.console&&window.console.log("Ad in view:",e,this,i),t("<img/>").attr({src:n.config[e]}).appendTo(this)}})}};t(n.init)}(jQuery);
+\ No newline at end of file
+diff --git a/gulpfile.js b/gulpfile.js
+index ba1cc7d..d6f08aa 100644
+--- a/gulpfile.js
++++ b/gulpfile.js
+@@ -1,62 +1,61 @@
+-var gulp = require('gulp'),
+-  sass = require('gulp-sass'),
+-  cssmin = require('gulp-cssmin'),
+-  minifyCSS = require('gulp-minify-css'),
+-  autoprefixer = require('gulp-autoprefixer'),
++/*jshint strict:false*/
++
++var gulp = require("gulp"),
++  sass = require("gulp-sass"),
++  minifyCSS = require("gulp-minify-css"),
++  autoprefixer = require("gulp-autoprefixer"),
+   rename = require("gulp-rename"),
+-  jshint = require('gulp-jshint'),
+-  stylish = require('jshint-stylish'),
+-  uglify = require('gulp-uglify'),
+-  stripDebug = require('gulp-strip-debug'),
+-  notify = require('gulp-notify'),
+-  concat = require('gulp-concat'),
+-  clean = require('gulp-clean');
++  jshint = require("gulp-jshint"),
++  stylish = require("jshint-stylish"),
++  uglify = require("gulp-uglify"),
++  notify = require("gulp-notify"),
++  concat = require("gulp-concat"),
++  clean = require("gulp-clean");
+ 
+-gulp.task('default', ['clean', 'build', 'watch']);
++gulp.task("default", ["build", "watch"]);
+ 
+-gulp.task('build', ['css', 'lint', 'js']);
++gulp.task("build", ["css", "lint", "js"]);
+ 
+-gulp.task('clean', function(){
+-  gulp.src(['dist'], {read: false})
++gulp.task("clean", function(){
++  gulp.src(["dist"], {read: false})
+     .pipe(clean());
+-})
++});
+ 
+-gulp.task('css', function () {
+-  gulp.src('./scss/*.scss')
++gulp.task("css", function () {
++  gulp.src("./scss/*.scss")
+     .pipe(sass({
+       errLogToConsole: true
+     }))
+-  .pipe(autoprefixer({
+-    browsers: ['last 2 versions'],
+-    cascade: false
+-  }))
+-  .pipe(minifyCSS({
+-    keepSpecialComments: '*'
+-  }))
+-  .pipe(rename('style.css'))
+-  //.pipe(gulp.dest('./dist/css'))
+-  .pipe(gulp.dest('./'))
+-  .pipe(notify({ message: 'css task complete' }));
++    .pipe(autoprefixer({
++      browsers: ["last 2 versions"],
++      cascade: false
++    }))
++    .pipe(minifyCSS({
++      keepSpecialComments: "*"
++    }))
++    .pipe(rename("style.css"))
++    .pipe(gulp.dest("./"))
++    .pipe(notify({ message: "css task complete" }));
+ });
+ 
+-gulp.task('js', function() {
+-  gulp.src(['js/lib/*.js', 'js/*.js'])
++gulp.task("js", function() {
++  gulp.src(["js/lib/*.js", "js/*.js"])
+     .pipe(concat("main.js"))
+     .pipe(uglify())
+-    //.pipe(stripDebug())
+-    .pipe(rename({suffix: '.min'}))
+-    .pipe(gulp.dest('./dist/js'))
+-    .pipe(notify({ message: 'js task complete' }));
++    .pipe(rename({suffix: ".min"}))
++    .pipe(gulp.dest("./dist/js"))
++    .pipe(notify({ message: "js task complete" }));
+ });
+ 
+-gulp.task('lint', function() {
+-  gulp.src(['./js/*.js'])
++
++gulp.task("lint", function() {
++  gulp.src(["./js/*.js"])
+     .pipe(jshint())
+     .pipe(jshint.reporter(stylish))
+-    .pipe(notify({ message: 'lint task complete' }));
++    .pipe(notify({ message: "lint task complete" }));
+ });
+ 
+-gulp.task('watch', function() {
+-  gulp.watch('scss/*.scss', ['css']);
+-  gulp.watch('js/*.js', ['js']);
++gulp.task("watch", function() {
++  gulp.watch("scss/*.scss", ["css"]);
++  gulp.watch("js/*.js", ["js"]);
+ });
+diff --git a/header.php b/header.php
+index 940286c..1c299a6 100644
+--- a/header.php
++++ b/header.php
+@@ -19,7 +19,7 @@
+   <?php include('includes/nav.php'); ?>
+ 
+   <div class="main-container">
+-    <header class="main-header" role="banner" itemscope itemtype="http://schema.org/WPHeader">
++    <header class="main-header display-none" role="banner" itemscope itemtype="http://schema.org/WPHeader">
+       <div class="container">
+         <div id="header">
+           <?php if ( !empty($mts_options['mts_header_social']) && is_array($mts_options['mts_header_social'])) { ?>
+@@ -67,6 +67,7 @@
+ 
+         </div><!--#header-->
+       </div><!--.container-->
++
+       <?php if ( $mts_options['mts_show_primary_nav'] == '1' ) { ?>
+         <div id="sticky" class="primary-navigation" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
+           <div class="container">
+diff --git a/includes/ads/300x250.php b/includes/ads/300x250.php
+deleted file mode 100644
+index f0eecf9..0000000
+--- a/includes/ads/300x250.php
++++ /dev/null
+@@ -1,3 +0,0 @@
+-<a href="#">
+-  <img src="http://placehold.it/300x250&text=300x250+Ad" width="300" />
+-</a>
+diff --git a/includes/nav.php b/includes/nav.php
+index ac6ef8b..61874f0 100644
+--- a/includes/nav.php
++++ b/includes/nav.php
+@@ -13,8 +13,11 @@ foreach ( $categories as $category ) {
+ ?>
+ 
+ <div class="globalNavSpacer"></div>
+-<nav class="globalNav clearfix mobile-menu-wrapper toggle-mobile-menu" role="navigation">
+-  <div class="globalNav-logoWrap">
+-    <img class="globalNav-logo" src="http://placehold.it/300x50&text=Climate+Illustrated" alt="Climate Illustrated" />
+-  </div>
+-</nav>
++<div class="globalNav clearfix mobile-menu-wrapper toggle-mobile-menu align-center" role="navigation">
++    <a class="hamburger"></a>
++    <h2 class="globalNav-logoWrap">
++      <a class="styledFontLogo globalNav-logo" href="<?php echo home_url(); ?>">
++        <?php bloginfo( 'name' ); ?>
++      </a>
++    </h2>
++</div>
+diff --git a/js/main.js b/js/main.js
+index 925d0ed..931ed97 100644
+--- a/js/main.js
++++ b/js/main.js
+@@ -1,4 +1,33 @@
+ (function($){
+   "use strict";
+-  //code here
++
++  var ads = {
++
++    config: {
++      "300x250": "http://placehold.it/300x250&text=300x250+ad"
++    },
++
++    init: function(){
++      $(".ad").viewable({
++        offset: -50, //height of nav
++        callback: function(data){
++          var $this = $(this);
++          var adType = $this.data("ad");
++
++          if(window.console){
++            window.console.log("Ad in view:", adType, this, data);
++          }
++
++          $("<img/>").attr({
++            src: ads.config[adType]
++          }).appendTo(this);
++
++        }
++      });
++    }
++
++  };
++
++  $(ads.init);
++
+ })(jQuery);
+diff --git a/package.json b/package.json
+index ebd8748..cf161bd 100644
+--- a/package.json
++++ b/package.json
+@@ -13,13 +13,11 @@
+     "gulp-autoprefixer": "^2.1.0",
+     "gulp-clean": "^0.3.1",
+     "gulp-concat": "^2.5.2",
+-    "gulp-cssmin": "^0.1.6",
+     "gulp-jshint": "^1.9.2",
+     "gulp-minify-css": "^1.0.0",
+     "gulp-notify": "^2.2.0",
+     "gulp-rename": "^1.2.0",
+     "gulp-sass": "^1.3.3",
+-    "gulp-strip-debug": "^1.0.2",
+     "gulp-uglify": "^1.1.0",
+     "gulp-watch": "^4.1.1",
+     "jshint-stylish": "^1.0.1"
+diff --git a/scss/_modifiers.scss b/scss/_modifiers.scss
+index ba99691..668be99 100644
+--- a/scss/_modifiers.scss
++++ b/scss/_modifiers.scss
+@@ -1,5 +1,21 @@
++.display-none {
++  display: none;
++}
++
+ .hide-for-small {
+   @media (max-width: $screen-small){
+     display: none;
+   }
+ }
++
++.fr {
++  float: right;
++}
++
++.fl {
++  float: left;
++}
++
++.align-center {
++  text-align: center;
++}
+diff --git a/scss/_nav.scss b/scss/_nav.scss
+index f3a5ada..17c0569 100644
+--- a/scss/_nav.scss
++++ b/scss/_nav.scss
+@@ -1,5 +1,5 @@
+ $navHeight: 50px;
+-$logoWidth: 300px;
++$logoWidth: 350px;
+ $mobileNavWidth: 300px;
+ 
+ .mobile-menu-active {
+@@ -17,6 +17,7 @@ $mobileNavWidth: 300px;
+   width: 100%;
+   top: 0;
+   left: 0;
++  overflow: visible;
+ 
+   h1, h2, h3, h4, h5, h6 {
+     line-height: $navHeight;
+@@ -25,15 +26,42 @@ $mobileNavWidth: 300px;
+ }
+ 
+ .globalNav-logoWrap {
+-  width: $logoWidth;
+-  margin:0 auto;
++  display: inline;
++  text-align: center;
++  top: $navHeight / 2.5;
++  white-space: nowrap;
++  overflow: visible;
+ }
+ 
+-.globalNav-logo {
++.hamburger {
+   position: absolute;
+-  width: $logoWidth;
+-  margin: 0 auto;
+-  top: $navHeight / 2.5;
++  left: 15px;
++  top: 13px;
++  width: 17px;
++  height: 19px;
++  &:before {
++    content: "\f0c9";
++    color: #fff;
++    font-family: FontAwesome;
++  }
++}
++
++.styledFontLogo {
++  font-family: 'Bangers';
++  font-weight: normal;
++  font-size: 24px;
++  color: #ffffff;
++  text-shadow: -1px 1px 1px white, -2px 2px 0px rgba(0,0,0,.15);
++  letter-spacing: .015em;
++
++  &:hover {
++    color: #ffffff;
++  }
++
++  @media (min-width: $screen-extra-small){
++    font-size: inherit;
++  }
++
+ }
+ 
+ .globalNavSpacer {
+diff --git a/scss/_overrides.scss b/scss/_overrides.scss
+index 343e100..84f77b9 100644
+--- a/scss/_overrides.scss
++++ b/scss/_overrides.scss
+@@ -1,3 +1,7 @@
++#wpadminbar {
++  @extend .display-none;
++}
++
+ .sidebar {
+   //need to keep sidebar to min 300px for ad
+   width: 300px;
+diff --git a/scss/_vars.scss b/scss/_vars.scss
+index dee2263..d98f257 100644
+--- a/scss/_vars.scss
++++ b/scss/_vars.scss
+@@ -1,4 +1,5 @@
+ // viewport breakpoints
++$screen-extra-small: 480px;
+ $screen-small: 767px;
+ $screen-medium: 992px;
+ $screen-large: 1200px;
+@@ -6,4 +7,4 @@ $screen-ad-min: 1231px;
+ 
+ 
+ // colours
+-$brandPrimary: #63c2e7;
++$brandPrimary: #00afec;
+diff --git a/scss/style.scss b/scss/style.scss
+index 881a360..ee56b59 100644
+--- a/scss/style.scss
++++ b/scss/style.scss
+@@ -10,3 +10,4 @@ Template: magazine
+ @import "modifiers";
+ @import "nav";
+ @import "overrides";
++@import "ads";
+diff --git a/sidebar.php b/sidebar.php
+index eaf1e88..afb61ab 100644
+--- a/sidebar.php
++++ b/sidebar.php
+@@ -6,8 +6,8 @@
+     <div id="sidebars" class="g">
+         <div class="sidebar">
+ 
+-            <div class="widget hide-for-small ad">
+-                <?php include('includes/ads/300x250.php'); ?>
++            <div class="widget">
++                <?php include('includes/ads/rr-top.php'); ?>
+             </div>
+ 
+             <?php if (!dynamic_sidebar($sidebar)) : ?>
+diff --git a/style.css b/style.css
+index c7c006b..2b1bcaf 100644
+--- a/style.css
++++ b/style.css
+@@ -4,4 +4,4 @@ Version: 1.0
+ Author: Mike Spencer
+ Description: Custom Climate Illustrated theme (A child theme of Magazine by MyThemeShop)
+ Template: magazine
+-*/@media (max-width:767px){.hide-for-small{display:none}}.mobile-menu-active .globalNav{left:300px}.globalNav{transition:left 500ms ease;background-color:#63c2e7;height:50px;position:fixed;z-index:99999;width:100%;top:0;left:0}.globalNav-logo,.globalNav-logoWrap{margin:0 auto;width:300px}.globalNav h1,.globalNav h2,.globalNav h3,.globalNav h4,.globalNav h5,.globalNav h6{line-height:50px;margin:0}.globalNav-logo{position:absolute;top:20px}.globalNavSpacer{height:50px}.sidebar{width:300px}
+\ No newline at end of file
++*/#wpadminbar,.display-none{display:none}@media (max-width:767px){.hide-for-small{display:none}}.fr{float:right}.fl{float:left}.align-center{text-align:center}.mobile-menu-active .globalNav{left:300px}.globalNav{transition:left 500ms ease;background-color:#00afec;height:50px;position:fixed;z-index:99999;width:100%;top:0;left:0;overflow:visible}.globalNav h1,.globalNav h2,.globalNav h3,.globalNav h4,.globalNav h5,.globalNav h6{line-height:50px;margin:0}.globalNav-logoWrap{display:inline;text-align:center;top:20px;white-space:nowrap;overflow:visible}.hamburger{position:absolute;left:15px;top:13px;width:17px;height:19px}.ad--300x50,.globalNavSpacer{height:50px}.hamburger:before{content:"\f0c9";color:#fff;font-family:FontAwesome}.styledFontLogo{font-family:Bangers;font-weight:400;font-size:24px;color:#fff;text-shadow:-1px 1px 1px #fff,-2px 2px 0 rgba(0,0,0,.15);letter-spacing:.015em}.styledFontLogo:hover{color:#fff}@media (min-width:480px){.styledFontLogo{font-size:inherit}}.ad--300x250,.ad--300x50,.ad--300x600,.sidebar{width:300px}.ad--300x250{height:250px}.ad--300x600{height:600px}.ad--728x90{width:728px;height:90px}
+\ No newline at end of file

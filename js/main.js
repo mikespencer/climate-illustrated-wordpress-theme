@@ -1,6 +1,17 @@
 (function($){
   "use strict";
 
+  var nav = {
+    init: function(){
+      this.addEventListeners();
+    },
+    addEventListeners: function(){
+      $(".toggle-nav-dropdown").on("click", function(){
+        $(".nav-dropdown").toggleClass("active");
+      });
+    },
+  };
+
   var ads = {
 
     config: {
@@ -28,6 +39,9 @@
 
   };
 
-  $(ads.init);
+  $(function(){
+    nav.init();
+    ads.init();
+  });
 
 })(jQuery);

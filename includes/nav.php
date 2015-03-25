@@ -13,11 +13,23 @@ foreach ( $categories as $category ) {
 ?>
 
 <div class="globalNavSpacer"></div>
-<div class="globalNav clearfix mobile-menu-wrapper toggle-mobile-menu align-center" role="navigation">
-    <a class="hamburger"></a>
-    <h2 class="globalNav-logoWrap">
-      <a class="styledFontLogo globalNav-logo" href="<?php echo home_url(); ?>">
-        <?php bloginfo( 'name' ); ?>
-      </a>
-    </h2>
+<div class="globalNav clearfix mobile-menu-wrapper align-center" role="navigation">
+  <a class="hamburger toggle-nav-dropdown"></a>
+  <h2 class="globalNav-logoWrap">
+    <a class="styledFontLogo globalNav-logo" href="<?php echo home_url(); ?>">
+      <?php bloginfo( 'name' ); ?>
+    </a>
+  </h2>
+</div>
+
+<div class="nav-dropdown">
+  <ul class="nav-dropdown-inner">
+    <li><a href="#">Item 1</a></li>
+    <li class="break"></li>
+    <li><a href="#">Other item</a></li>
+    <li><a href="#">Another item</a></li>
+    <li><a href="#">Yet another item</a></li>
+    <li class="break"></li>
+    <li><a href="#">Last item</a></li>
+  </ul>
 </div>

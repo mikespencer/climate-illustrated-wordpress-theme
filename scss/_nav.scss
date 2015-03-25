@@ -1,6 +1,7 @@
 $navHeight: 50px;
 $logoWidth: 350px;
 $mobileNavWidth: 300px;
+$navZIndex: 99999;
 
 .mobile-menu-active {
   .globalNav {
@@ -13,7 +14,7 @@ $mobileNavWidth: 300px;
   background-color: $brandPrimary;
   height: $navHeight;
   position: fixed;
-  z-index: 99999;
+  z-index: $navZIndex;
   width: 100%;
   top: 0;
   left: 0;
@@ -35,13 +36,14 @@ $mobileNavWidth: 300px;
 
 .hamburger {
   position: absolute;
-  left: 15px;
-  top: 13px;
+  left: 10px;
+  top: 8px;
   width: 17px;
   height: 19px;
+  padding: 4px;
   &:before {
     content: "\f0c9";
-    color: #fff;
+    color: $lightText;
     font-family: FontAwesome;
   }
 }
@@ -50,12 +52,12 @@ $mobileNavWidth: 300px;
   font-family: 'Bangers';
   font-weight: normal;
   font-size: 24px;
-  color: #ffffff;
+  color: $lightText;
   text-shadow: -1px 1px 1px white, -2px 2px 0px rgba(0,0,0,.15);
   letter-spacing: .015em;
 
   &:hover {
-    color: #ffffff;
+    color: $lightText;
   }
 
   @media (min-width: $screen-extra-small){
@@ -66,4 +68,52 @@ $mobileNavWidth: 300px;
 
 .globalNavSpacer {
   height: $navHeight;
+}
+
+// dropdown
+
+.toggle-nav-dropdown {
+  cursor: pointer;
+}
+
+.nav-dropdown {
+  overflow: hidden;
+
+  background-color: $lightBg;
+
+  transition: max-height 0.3s ease;
+
+  width: 300px;
+  max-height: 0px;
+  position: fixed;
+  top: $navHeight;
+  left: 5px;
+  z-index: $navZIndex - 1;
+
+  box-shadow: 0px 0px 5px 0px #666;
+
+  &.active {
+    max-height: 400px;
+  }
+}
+
+.nav-dropdown-inner {
+  padding: 10px 0;
+  li {
+    line-height: 30px;
+    &.break {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+      margin: 0 4px 4px;
+    }
+    a {
+      display: block;
+      padding: 10px;
+      &:hover {
+        color: $lightText;
+        background-color: $brandPrimary;
+      }
+    }
+  }
+
 }
